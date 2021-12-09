@@ -39,5 +39,47 @@ def get_rakuten():
     return selected_price
     
 
+# Yahoo!ショッピングから商品のタイトルを取得する関数
+def get_yahoo():
+    url = 'https://shopping.yahoo.co.jp/search?p=' + search_word + '&X=2' + '&ship=on'
+    responce = requests.get(url)
+    html = responce.text
+    soup = BeautifulSoup(html, 'html.parser')
+    items = soup.select('.LoopList__item')
+    
+    item_number = 0
+    price_list = []
+    
+    for item in items:
+        title = item.select_one('.WeRPqEQO_DMj').text
+        price = item.select_one('._3-CgJZLU91dR').text.replace(',', '')
+        price_list.append(price)
+        print('【' + str(item_number) + '】 '  + format(title))
+        print('【価格】: {}'.format(price))
+        print('\n')
+        item_number += 1
+    
+    selected_item_number = int(input('Yahoo! : 商品番号を入力してください : '))
+    selected_price = int(price_list[selected_item_number])
+    return selected_price
+
+
 rakuten_price = get_rakuten()
 # print(rakuten_price)
+
+print('-------------------------------------')
+
+yahoo_price = get_yahoo()
+# print(yahoo_price)
+
+print('-------------------------------------')
+
+
+print('楽天: {}円\nyahoo!: {}円'.format(rakuten_price, yahoo_price))
+
+if rakuten_price < yahoo_price:
+    print('楽天の方が安い')
+elif yahoo_price < rakuten_price:
+    print('Yahoo!の方が安い')
+else:
+    print('同じ値段')
