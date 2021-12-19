@@ -62,15 +62,20 @@ def get_yahoo():
     selected_item_number = int(input('Yahoo! : 商品番号を入力してください : '))
     selected_price = int(price_list[selected_item_number])
     return selected_price
+    
+
+# Amazonの商品のタイトルを取得する関数
 
 
+print('楽天市場商品一覧', end='\n\n')
 rakuten_price = get_rakuten()
-# print(rakuten_price)
+
 
 print('-------------------------------------')
 
+print('Yahoo!ショッピング商品一覧', end='\n\n')
 yahoo_price = get_yahoo()
-# print(yahoo_price)
+
 
 print('-------------------------------------')
 
